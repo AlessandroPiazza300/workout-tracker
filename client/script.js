@@ -15,6 +15,8 @@ const totalWorkouts = document.getElementById("totalWorkouts");
 const totalMinute = document.getElementById("totalMinutes");
 const averageDuration = document.getElementById("averageDuration");
 
+let workoutChart; // con let il grafico viene creato distrutto e ricreato ogni volta che deve essere aggiornato
+
 
 // CARICA WORKOUT
 async function loadWorkouts() {
@@ -49,6 +51,81 @@ async function loadWorkouts() {
         totalMinute.textContent = minutes;
 
         averageDuration.textContent = average;
+
+        // GRAFICO
+
+        const labels = [];
+
+        const durations = [];
+
+        workouts.forEach(workout => {
+
+            labels.push(workout.name);
+
+            durations.push(workout.duration);
+        });
+
+        // distruggi vecchio grafico nessun problema di duplicazione 
+        if (workoutChart) {
+
+            workoutChart.destroy();
+        }
+
+        const ctx =
+            document.getElementById("workoutChart");
+
+        workoutChart = new Chart(ctx, {
+
+            type: "bar",
+
+            data: {
+
+                labels: labels,
+
+                datasets: [{
+
+                    label: "Durata Workout",
+
+                    data: durations,
+
+                    borderWidth: 1
+                }]
+            },
+
+            options: {
+
+                responsive: true,
+
+                plugins: {
+
+                    legend: {
+
+                        labels: {
+                            color: "white"
+                        }
+                    }
+                },
+
+                scales: {
+
+                    x: {
+
+                        ticks: {
+                            color: "white"
+                        }
+                    },
+
+                    y: {
+
+                        beginAtZero: true,
+
+                        ticks: {
+                            color: "white"
+                        }
+                    }
+                }
+            }
+        });
 
 
         workouts.forEach(workout => {

@@ -208,3 +208,15 @@ button {
 
     margin-bottom: 10px;
 }
+
+.chart-container{
+    background: #1e1e1e;
+
+    padding: 20px;
+
+    border-radius: 12px;
+
+    margin-bottom: 30px;
+
+    box-shadow: 0 5px 15px rgba(0,0,0,0.4);
+}
