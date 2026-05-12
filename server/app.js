@@ -28,6 +28,26 @@ db.serialize(() => {
             duration INTEGER
         )
     `);
+// nuova tabella per esercizi all'interno del workout
+    db.run(`
+    
+        CREATE TABLE IF NOT EXISTS. exercises(
+            id INTEGER PRIMARY KEY AUTOINCREMENT, 
+            
+            workout_id INTEGER,
+
+            exercise_name TEXT,
+
+            sets INTEGER,
+
+            reps INTEGER,
+
+            weight INTEGER,
+
+            FOREIGN KEY(workout_id)
+            REFERENCES workouts(id)
+        )
+    `);
 });
 
 app.get("/workouts", (req, res) => {
