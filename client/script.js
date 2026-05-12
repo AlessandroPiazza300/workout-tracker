@@ -11,6 +11,10 @@ const durationInput = document.getElementById("duration");
 const searchInput = document.getElementById("searchInput");
 const dateFilter = document.getElementById("dateFilter");
 
+const totalWorkouts = document.getElementById("totalWorkouts");
+const totalMinute = document.getElementById("totalMinutes");
+const averageDuration = document.getElementById("averageDuration");
+
 
 // CARICA WORKOUT
 async function loadWorkouts() {
@@ -22,6 +26,30 @@ async function loadWorkouts() {
         const workouts = await response.json();
 
         workoutList.innerHTML = "";
+
+        // parte che mi aiuta a calcolare le statistiche
+        const total = workouts.length;
+
+        let minutes = 0;
+
+        workouts.forEach(workouts => {
+            
+            minutes += Number(workout.duration); // somma le durate di tutti i workouts
+        });
+
+        const average =  // calcolo media 
+            total > 0
+            ? Math.round(minutes/total)
+            : 0;
+
+        // aggiornamento dashboard
+
+        totalWorkouts.textContent = total; // aggiornamento HTML automatico
+
+        totalMinute.textContent = minutes;
+
+        averageDuration.textContent = average;
+
 
         workouts.forEach(workout => {
 
