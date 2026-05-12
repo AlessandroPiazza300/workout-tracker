@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Dettaglio Workout</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <nav class="navbar">
+        <h1>💪 Dettaglio Workout</h1>
+    </nav>
+
+    <div class="container">
+
+        <div class="form-container">
+
+            <input
+                type="text"
+                id="exerciseName"
+                placeholder="Nome esercizio"
+            >
+
+            <input
+                type="number"
+                id="sets"
+                placeholder="Serie"
+            >
+
+            <input
+                type="number"
+                id="reps"
+                placeholder="Ripetizioni"
+            >
+
+            <input
+                type="number"
+                id="weight"
+                placeholder="Peso kg"
+            >
+
+            <button id="addExerciseBtn">
+                Aggiungi Esercizio
+            </button>
+
+        </div>
+
+        <table class="exercise-table">
+
+            <thead>
+                <tr>
+                    <th>Esercizio</th>
+                    <th>Serie</th>
+                    <th>Ripetizioni</th>
+                    <th>Peso</th>
+                </tr>
+            </thead>
+
+            <tbody id="exerciseTableBody">
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+    <script src="workout.js"></script>
+
+</body>
+</html>

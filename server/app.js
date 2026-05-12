@@ -31,7 +31,7 @@ db.serialize(() => {
 // nuova tabella per esercizi all'interno del workout
     db.run(`
     
-        CREATE TABLE IF NOT EXISTS. exercises(
+        CREATE TABLE IF NOT EXISTS exercises(
             id INTEGER PRIMARY KEY AUTOINCREMENT, 
             
             workout_id INTEGER,
