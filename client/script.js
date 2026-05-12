@@ -34,7 +34,7 @@ async function loadWorkouts() {
 
         let minutes = 0;
 
-        workouts.forEach(workouts => {
+        workouts.forEach(workout => {
             
             minutes += Number(workout.duration); // somma le durate di tutti i workouts
         });
@@ -133,7 +133,7 @@ async function loadWorkouts() {
             const searchValue = 
                 searchInput.value.toLowerCase();
 
-            const selectdDate = 
+            const selectedDate = 
                 dateFilter.value;
 
             // filtro ricerca
