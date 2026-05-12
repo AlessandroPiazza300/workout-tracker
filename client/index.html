@@ -12,37 +12,56 @@
 
 <body>
 
-    <div class="container">
-
+    <!-- NAVBAR -->
+    <nav class="navbar">
         <h1>🏋️ Workout Tracker</h1>
+    </nav>
+
+    <div class="container">
 
         <!-- FORM -->
         <div class="form-container">
 
-            <input type="text" id="name" placeholder="Nome workout">
+            <input
+                type="text"
+                id="name"
+                placeholder="Nome workout"
+            >
 
-            <input type="date" id="date">
+            <input
+                type="date"
+                id="date"
+            >
 
-            <input type="number" id="duration" placeholder="Durata minuti">
+            <input
+                type="number"
+                id="duration"
+                placeholder="Durata minuti"
+            >
 
             <button id="addWorkoutBtn">
-                Aggiungi Workout
+                Aggiungi
             </button>
 
         </div>
 
-        <input
-            type="text"
-            id="searchInput"
-            placeholder="CERCA WORKOUT..."
-        >
+        <!-- FILTRI -->
+        <div class="filters">
 
-        <input
-            type="date"
-            id="dateFilter"
-        >
+            <input
+                type="text"
+                id="searchInput"
+                placeholder="🔍 Cerca workout..."
+            >
 
-        <!-- LISTA WORKOUT -->
+            <input
+                type="date"
+                id="dateFilter"
+            >
+
+        </div>
+
+        <!-- LISTA -->
         <div id="workoutList">
 
         </div>
