@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Workout Tracker</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div class="container">
+
+        <h1>🏋️ Workout Tracker</h1>
+
+        <!-- FORM -->
+        <div class="form-container">
+
+            <input type="text" id="name" placeholder="Nome workout">
+
+            <input type="date" id="date">
+
+            <input type="number" id="duration" placeholder="Durata minuti">
+
+            <button id="addWorkoutBtn">
+                Aggiungi Workout
+            </button>
+
+        </div>
+
+        <input
+            type="text"
+            id="searchInput"
+            placeholder="CERCA WORKOUT..."
+        >
+
+        <input
+            type="date"
+            id="dateFilter"
+        >
+
+        <!-- LISTA WORKOUT -->
+        <div id="workoutList">
+
+        </div>
+
+    </div>
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>
