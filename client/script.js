@@ -324,10 +324,11 @@ async function editWorkout(id, oldName, oldDate, oldDuration) {
 
         console.error("Errore modifica:", error);
     }
+}
 
 // funzione che riceve
 function openWorkout(id){
     window.location.href = // cambia pagina
         `workout.html?id=${id}`;
 }
-}
+
