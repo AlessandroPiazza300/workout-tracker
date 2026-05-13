@@ -85,3 +85,7 @@ addExerciseBtn.addEventListener("click", async () => {
 });
 
 loadExercises();
+
+function goBack() {
+    window.location.href = "/"; // homepage
+}

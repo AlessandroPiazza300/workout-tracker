@@ -257,3 +257,29 @@ button {
 
     color: black;
 }
+
+.back-button{
+
+    background: #00ff88;
+
+    color: black;
+
+    padding: 10px 15px;
+
+    border: none;
+
+    border-radius: 8px;
+
+    front-weight: bold;
+
+    cursor: pointer;
+
+    margin-bottom: 15px;
+
+    transition: 0.3s;
+}
+
+.back-button:hover{
+
+    opacity: 0.8;
+}
