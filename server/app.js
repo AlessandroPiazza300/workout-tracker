@@ -181,6 +181,68 @@ app.put("/workouts/:id", (req, res) => {
     });
 });
 
+// GET esercizi di un workout
+app.get("/exercises/:workoutId", (req, res) => {
+
+    const query = `
+        SELECT * FROM exercises
+        WHERE workout_id = ?
+    `;
+
+    db.all(query, [req.params.workoutId], (err, rows) => {
+
+        if (err) {
+            return res.status(500).json(err);
+        }
+
+        res.json(rows);
+    });
+});
+
+// POST nuovo esercizio
+app.post("/exercises", (req, res) => {
+
+    const {
+        workout_id,
+        exercise_name,
+        sets,
+        reps,
+        weight
+    } = req.body;
+
+    const query = `
+        INSERT INTO exercises (
+            workout_id,
+            exercise_name,
+            sets,
+            reps,
+            weight
+        )
+        VALUES (?, ?, ?, ?, ?)
+    `;
+
+    db.run(
+        query,
+        [
+            workout_id,
+            exercise_name,
+            sets,
+            reps,
+            weight
+        ],
+        function(err) {
+
+            if (err) {
+                return res.status(500).json(err);
+            }
+
+            res.json({
+                message: "Esercizio aggiunto"
+            });
+        }
+    );
+});
+
 app.listen(3000, () => {
     console.log("Server avviato su http://localhost:3000");
 });

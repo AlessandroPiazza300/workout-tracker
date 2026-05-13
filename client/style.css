@@ -220,3 +220,40 @@ button {
 
     box-shadow: 0 5px 15px rgba(0,0,0,0.4);
 }
+
+.workout-card h3 {
+
+    cursor: pointer;
+}
+
+.workout-card h3:hover{
+
+    opacity: 0.8;
+}
+
+.exercise-table{
+    width: 100%;
+
+    border-collapse: collapse;
+
+    background: #1e1e1e;
+
+    border-radius: 12px;
+
+    overflow: hidden;
+}
+
+.exercise-table th,
+.exercise-table td{
+    padding: 15px;
+
+    text-align: center;
+
+    border-bottom: 1px solid #333;
+}
+
+.exercise-table th{
+    background: #00ff88;
+
+    color: black;
+}
