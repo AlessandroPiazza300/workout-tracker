@@ -111,6 +111,14 @@ addSelectedBtn.addEventListener("click", () => {
                     .toLocaleDateString("it-IT")}
             </td>
             <td>${exercise.weight} kg</td>
+
+            <td>
+                    <button onclick="
+                        removeFromComparison(${exercise.id})
+                    ">
+                        Elimina
+                    </button>
+            </td>
         `;
 
         comparisonTableBody.appendChild(row);
@@ -124,6 +132,54 @@ addSelectedBtn.addEventListener("click", () => {
 
     modal.classList.add("hidden");
 });
+
+function removeFromComparison(id) {
+
+    selectedExercises =
+        selectedExercises.filter(
+            exercise => exercise.id !== id
+        );
+
+    comparisonTableBody.innerHTML = "";
+
+    const labels = [];
+
+    const weights = [];
+
+    selectedExercises.forEach((exercise, index) => {
+
+        const row = document.createElement("tr");
+
+        row.innerHTML = `
+            <td>${index + 1}</td>
+
+            <td>${exercise.exercise_name}</td>
+
+            <td>
+                ${new Date(exercise.date)
+                    .toLocaleDateString("it-IT")}
+            </td>
+
+            <td>${exercise.weight} kg</td>
+
+            <td>
+                <button onclick="
+                    removeFromComparison(${exercise.id})
+                ">
+                    Elimina
+                </button>
+            </td>
+        `;
+
+        comparisonTableBody.appendChild(row);
+
+        labels.push(index + 1);
+
+        weights.push(exercise.weight);
+    });
+
+    createChart(labels, weights);
+}
 
 // GRAFICO
 function createChart(labels, weights) {
