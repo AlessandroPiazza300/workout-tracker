@@ -206,6 +206,19 @@ dateFilter.addEventListener(
 // AGGIUNGI WORKOUT
 addWorkoutBtn.addEventListener("click", async () => {
 
+    if (!nameInput.value || !dateInput.value || !durationInput.value){
+        alert("COMPILA TUTTI I CAMPI!");
+
+        return;
+    }
+
+    if(Number(durationInput.value) <=0){
+
+        alert("LA DURATA DEVE ESSERE POSITIVA!");
+
+        return;
+    }
+
     const newWorkout = {
 
         name: nameInput.value,
@@ -254,6 +267,12 @@ loadWorkouts();
 
 // ELIMINA WORKOUT
 async function deleteWorkout(id) {
+
+    const confirmDelete = confirm("SEI SICURO DI VOLER ELIMINARE?");
+
+    if(!confirmDelete){
+        return;
+    }
 
     try {
 

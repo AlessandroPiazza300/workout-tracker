@@ -43,6 +43,27 @@ async function loadExercises() {
             <td>${exercise.sets}</td>
             <td>${exercise.reps}</td>
             <td>${exercise.weight} kg</td>
+
+            <td>
+
+                <button onclick = "
+                    editExercise(
+                        ${exercise.id},
+                        '${exercise.exercise_name}',
+                        ${exercise.sets},
+                        ${exercise.reps},
+                        ${exercise.weight}
+                    )
+                ">
+                    Modifica
+                </button>
+
+                <button onclick = "
+                    deleteExercise(${exercise.id})
+                ">
+                    Elimina
+                </button>
+            </td>
         `;
 
         tableBody.appendChild(row);
@@ -51,6 +72,20 @@ async function loadExercises() {
 
 // aggiungi esercizio
 addExerciseBtn.addEventListener("click", async () => {
+
+    if( !exerciseName.value || !setsInput.value || !repsInput.value || !weightInput.value){
+
+            alert("COMPILA TUTTI I CAMPI");
+
+            return;
+
+        }
+
+        if (Number(setsInput.value) <= 0 || Number(repsInput.value) <= 0 || Number(weightInput.value) < 0){
+            alert("INSERIRE VALORE CORRETTO");
+
+            return;
+        }
 
     const newExercise = {
 
@@ -85,6 +120,86 @@ addExerciseBtn.addEventListener("click", async () => {
 });
 
 loadExercises();
+
+// elimina esercizio
+async function deleteExercise(id) {
+
+    const confirmDelete = confirm(
+        "Sei sicuro di voler eliminare questo esercizio?"
+    );
+
+    if (!confirmDelete) {
+
+        return;
+    }
+
+    await fetch(`/exercises/${id}`, {
+
+        method: "DELETE"
+    });
+
+    loadExercises();
+}
+
+// MODIFICA ESERCIZIO
+async function editExercise(
+    id,
+    oldName,
+    oldSets,
+    oldReps,
+    oldWeight
+) {
+
+    const newName =
+        prompt("Nome esercizio:", oldName);
+
+    const newSets =
+        prompt("Serie:", oldSets);
+
+    const newReps =
+        prompt("Ripetizioni:", oldReps);
+
+    const newWeight =
+        prompt("Peso:", oldWeight);
+
+    if (
+        !newName ||
+        !newSets ||
+        !newReps ||
+        !newWeight
+    ) {
+
+        return;
+    }
+
+    if(Number(newSets)<=0 || Number(newReps) <= 0 || Number(newWeight) < 0){
+        alert("INSERISCI VALORI VALIDI!");
+
+        return;
+    }
+
+    await fetch(`/exercises/${id}`, {
+
+        method: "PUT",
+
+        headers: {
+            "Content-Type": "application/json"
+        },
+
+        body: JSON.stringify({
+
+            exercise_name: newName,
+
+            sets: newSets,
+
+            reps: newReps,
+
+            weight: newWeight
+        })
+    });
+
+    loadExercises();
+}
 
 function goBack() {
     window.location.href = "/"; // homepage

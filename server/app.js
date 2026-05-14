@@ -243,6 +243,70 @@ app.post("/exercises", (req, res) => {
     );
 });
 
+// UPDATE esercizio
+app.put("/exercises/:id", (req, res) => {
+
+    const {
+        exercise_name,
+        sets,
+        reps,
+        weight
+    } = req.body;
+
+    const query = `
+        UPDATE exercises
+        SET
+            exercise_name = ?,
+            sets = ?,
+            reps = ?,
+            weight = ?
+        WHERE id = ?
+    `;
+
+    db.run(
+        query,
+        [
+            exercise_name,
+            sets,
+            reps,
+            weight,
+            req.params.id
+        ],
+        function(err) {
+
+            if (err) {
+
+                return res.status(500).json(err);
+            }
+
+            res.json({
+                message: "Esercizio aggiornato"
+            });
+        }
+    );
+});
+
+// DELETE esercizio
+app.delete("/exercises/:id", (req, res) => {
+
+    const query = `
+        DELETE FROM exercises
+        WHERE id = ?
+    `;
+
+    db.run(query, [req.params.id], function(err) {
+
+        if (err) {
+
+            return res.status(500).json(err);
+        }
+
+        res.json({
+            message: "Esercizio eliminato"
+        });
+    });
+});
+
 app.listen(3000, () => {
     console.log("Server avviato su http://localhost:3000");
 });
