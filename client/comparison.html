@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Confronto Esercizi</title>
+
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+    <nav class="navbar">
+
+        <h1>📈 Confronto Esercizi</h1>
+
+    </nav>
+
+    <div class="container">
+
+        <button onclick="goBack()">
+            ⬅ Torna alla Home
+        </button>
+
+        <br><br>
+
+        <button id="openModalBtn">
+            Seleziona esercizi
+        </button>
+
+        <br><br>
+
+        <!-- TABELLA -->
+        <table class="exercise-table">
+
+            <thead>
+
+                <tr>
+
+                    <th>#</th>
+
+                    <th>Esercizio</th>
+
+                    <th>Data Workout</th>
+
+                    <th>Peso</th>
+
+                </tr>
+
+            </thead>
+
+            <tbody id="comparisonTableBody">
+
+            </tbody>
+
+        </table>
+
+        <br><br>
+
+        <!-- GRAFICO -->
+        <div class="chart-container">
+
+            <canvas id="comparisonChart"></canvas>
+
+        </div>
+
+    </div>
+
+    <!-- MODALE -->
+    <div id="exerciseModal" class="modal hidden">
+
+        <div class="modal-content">
+
+            <h2>
+                Seleziona uno o più esercizi
+                da mettere a confronto
+            </h2>
+
+            <div id="exerciseSelectionList">
+
+            </div>
+
+            <br>
+
+            <button id="addSelectedBtn" disabled>
+                AGGIUNGI
+            </button>
+
+            <button id="closeModalBtn">
+                CHIUDI
+            </button>
+
+        </div>
+
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script src="comparison.js"></script>
+
+</body>
+
+</html>

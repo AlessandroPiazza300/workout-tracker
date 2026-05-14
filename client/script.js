@@ -351,3 +351,7 @@ function openWorkout(id){
         `workout.html?id=${id}`;
 }
 
+function openComparisonPage(){
+
+    window.location.href = "comparison.html";
+}

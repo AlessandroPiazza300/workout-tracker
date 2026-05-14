@@ -307,6 +307,33 @@ app.delete("/exercises/:id", (req, res) => {
     });
 });
 
+app.get("/all-exercises", (req, res) => {
+
+    const query = `
+
+        SELECT
+            exercises.id,
+            exercises.exercise_name,
+            exercises.weight,
+            workouts.date
+
+        FROM exercises
+
+        JOIN workouts
+        ON exercises.workout_id = workouts.id
+    `;
+
+    db.all(query, [], (err, rows) => {
+
+        if (err) {
+
+            return res.status(500).json(err);
+        }
+
+        res.json(rows);
+    });
+});
+
 app.listen(3000, () => {
     console.log("Server avviato su http://localhost:3000");
 });
