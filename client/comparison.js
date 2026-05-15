@@ -16,9 +16,41 @@ const exerciseSelectionList =
 const comparisonTableBody =
     document.getElementById("comparisonTableBody");
 
+const sortExercise = document.getElementById("sortExercises");
+
 let selectedExercises = [];
 
 let comparisonChart;
+
+function sortSelectedExercises() {
+
+    const sortValue =
+        sortExercises.value;
+
+    if (sortValue === "name") {
+
+        selectedExercises.sort((a, b) =>
+            a.exercise_name.localeCompare(
+                b.exercise_name
+            )
+        );
+    }
+
+    if (sortValue === "weight") {
+
+        selectedExercises.sort((a, b) =>
+            b.weight - a.weight
+        );
+    }
+
+    if (sortValue === "date") {
+
+        selectedExercises.sort((a, b) =>
+            new Date(a.date) -
+            new Date(b.date)
+        );
+    }
+}
 
 // TORNA HOME
 function goBack() {
@@ -91,6 +123,8 @@ closeModalBtn.addEventListener("click", () => {
 
 // AGGIUNGI
 addSelectedBtn.addEventListener("click", () => {
+
+    sortSelectedExercises();
 
     comparisonTableBody.innerHTML = "";
 
@@ -216,3 +250,14 @@ function createChart(labels, weights) {
         }
     });
 }
+
+sortExercises.addEventListener(
+    "change",
+    () => {
+
+        if (selectedExercises.length > 0) {
+
+            addSelectedBtn.click();
+        }
+    }
+);
