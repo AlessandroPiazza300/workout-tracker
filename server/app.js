@@ -44,6 +44,8 @@ db.serialize(() => {
 
             weight INTEGER,
 
+            notes TEXT,
+
             FOREIGN KEY(workout_id)
             REFERENCES workouts(id)
         )
@@ -107,6 +109,14 @@ app.delete("/workouts/:id", (req, res) => {
 
     const id = req.params.id;
 
+    db.run(
+        `
+        DELETE FROM exercises
+        WHERE workout_id = ?
+        `,
+        [id]
+    );
+    
     const query = `
         DELETE FROM workouts
         WHERE id = ?
@@ -207,7 +217,8 @@ app.post("/exercises", (req, res) => {
         exercise_name,
         sets,
         reps,
-        weight
+        weight,
+        notes
     } = req.body;
 
     const query = `
@@ -216,7 +227,8 @@ app.post("/exercises", (req, res) => {
             exercise_name,
             sets,
             reps,
-            weight
+            weight,
+            notes
         )
         VALUES (?, ?, ?, ?, ?)
     `;
@@ -228,7 +240,8 @@ app.post("/exercises", (req, res) => {
             exercise_name,
             sets,
             reps,
-            weight
+            weight,
+            notes
         ],
         function(err) {
 

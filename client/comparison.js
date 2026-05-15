@@ -18,6 +18,18 @@ const comparisonTableBody =
 
 const sortExercise = document.getElementById("sortExercises");
 
+const searchExercise = document.getElementById("searchExercise");
+
+searchExercise.addEventListener(
+    "input",
+    () => {
+
+        openModalBtn.click();
+
+        modal.classList.remove("hidden");
+    }
+);
+
 let selectedExercises = [];
 
 let comparisonChart;
@@ -69,9 +81,19 @@ openModalBtn.addEventListener("click", async () => {
     const exercises =
         await response.json();
 
+    const searchValue = searchExercise.value.toLowerCase();
+
     exerciseSelectionList.innerHTML = "";
 
     exercises.forEach(exercise => {
+
+        if (
+            !exercise.exercise_name
+            .toLowerCase()
+            .includes(searchValue)
+        ) {
+            return;
+        }
 
         const div =
             document.createElement("div");

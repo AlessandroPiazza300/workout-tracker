@@ -16,6 +16,9 @@ const repsInput =
 const weightInput =
     document.getElementById("weight");
 
+const notesInput = 
+    document.getElementById("notes");
+
 // prende id workout dall'url
 const params =
     new URLSearchParams(window.location.search);
@@ -43,6 +46,7 @@ async function loadExercises() {
             <td>${exercise.sets}</td>
             <td>${exercise.reps}</td>
             <td>${exercise.weight} kg</td>
+            <td>${exercise.notes || "-"}</td>
 
             <td>
 
@@ -98,6 +102,9 @@ addExerciseBtn.addEventListener("click", async () => {
         reps: repsInput.value,
 
         weight: weightInput.value
+
+        notes: notesInput.value
+
     };
 
     await fetch("/exercises", {
@@ -115,6 +122,7 @@ addExerciseBtn.addEventListener("click", async () => {
     setsInput.value = "";
     repsInput.value = "";
     weightInput.value = "";
+    notesInput.value = "";
 
     loadExercises();
 });
