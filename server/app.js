@@ -315,6 +315,8 @@ app.get("/all-exercises", (req, res) => {
             exercises.id,
             exercises.exercise_name,
             exercises.weight,
+            exercise.sets,
+            exercise.reps,
             workouts.date
 
         FROM exercises

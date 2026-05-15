@@ -15,6 +15,8 @@ const totalWorkouts = document.getElementById("totalWorkouts");
 const totalMinute = document.getElementById("totalMinutes");
 const averageDuration = document.getElementById("averageDuration");
 
+const badgeContainer = document.getElementById("badgeContainer");
+
 let workoutChart; // con let il grafico viene creato distrutto e ricreato ogni volta che deve essere aggiornato
 
 
@@ -51,6 +53,35 @@ async function loadWorkouts() {
         totalMinute.textContent = minutes;
 
         averageDuration.textContent = average;
+
+        badgeContainer.innerHTML = "";
+
+        if (total >= 5) {
+
+            badgeContainer.innerHTML += `
+                <div class="stat-card">
+                    🥉 5 Workout completati
+                </div>
+            `;
+        }
+
+       if (total >= 10) {
+
+            badgeContainer.innerHTML += `
+                <div class="stat-card">
+                    🥈 10 Workout completati
+                </div>
+            `;
+        }
+
+        if (total >= 20) {
+
+            badgeContainer.innerHTML += `
+                <div class="stat-card">
+                    🥇 20 Workout completati
+                </div>
+            `;
+        }
 
         // GRAFICO
 
