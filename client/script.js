@@ -10,6 +10,7 @@ const durationInput = document.getElementById("duration");
 
 const searchInput = document.getElementById("searchInput");
 const dateFilter = document.getElementById("dateFilter");
+const clearSearchBtn = document.getElementById("clearSearchBtn");
 
 const totalWorkouts = document.getElementById("totalWorkouts");
 const totalMinute = document.getElementById("totalMinutes");
@@ -90,6 +91,27 @@ async function loadWorkouts() {
         const durations = [];
 
         workouts.forEach(workout => {
+
+            const searchValue =
+                searchInput.value.toLowerCase();
+
+            const selectedDate =
+                dateFilter.value;
+
+            if (
+                !workout.name
+                .toLowerCase()
+                .includes(searchValue)
+            ) {
+                return;
+            }
+
+            if (
+                selectedDate &&
+                workout.date !== selectedDate
+            ) {
+                return;
+            }
 
             labels.push(workout.name);
 
@@ -231,6 +253,17 @@ searchInput.addEventListener(
 dateFilter.addEventListener(
     "change",
     loadWorkouts
+);
+
+clearSearchBtn.addEventListener( // svuota ricerca, filtro data ricarica tutti i workout
+    "click",
+    () => {
+        searchInput.value = "";
+
+        dateFilter.value = "";
+
+        loadWorkouts();
+    }
 );
 
 
