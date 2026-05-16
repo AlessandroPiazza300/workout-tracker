@@ -46,6 +46,7 @@ async function loadExercises() {
             <td>${exercise.sets}</td>
             <td>${exercise.reps}</td>
             <td>${exercise.weight} kg</td>
+            <td>${exercise.sets * exercise.reps * exercise.weight}</td>
             <td>${exercise.notes || "-"}</td>
 
             <td>

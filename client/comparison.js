@@ -219,10 +219,6 @@ function removeFromComparison(id) {
             <td>${exercise.weight} kg</td>
 
             <td>
-                ${exercise.sets * exercise.reps * exercise.weight}
-            </td>
-
-            <td>
                 <button onclick="
                     removeFromComparison(${exercise.id})
                 ">
