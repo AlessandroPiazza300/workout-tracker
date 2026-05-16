@@ -13,11 +13,6 @@ app.use(express.static(
     path.join(__dirname,"../client") // dice a express usa la cartella client come frontend
 ));
 
-// test server
-app.get("/", (req, res) => {
-    res.send("Workout Tracker API attiva 🚀");
-});
-
 // crea tabella all’avvio
 db.serialize(() => {
     db.run(`
@@ -230,7 +225,7 @@ app.post("/exercises", (req, res) => {
             weight,
             notes
         )
-        VALUES (?, ?, ?, ?, ?)
+        VALUES (?, ?, ?, ?, ?, ?)
     `;
 
     db.run(
@@ -328,8 +323,8 @@ app.get("/all-exercises", (req, res) => {
             exercises.id,
             exercises.exercise_name,
             exercises.weight,
-            exercise.sets,
-            exercise.reps,
+            exercises.sets,
+            exercises.reps,
             workouts.date
 
         FROM exercises

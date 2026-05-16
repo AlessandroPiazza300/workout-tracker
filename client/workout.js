@@ -56,7 +56,8 @@ async function loadExercises() {
                         '${exercise.exercise_name}',
                         ${exercise.sets},
                         ${exercise.reps},
-                        ${exercise.weight}
+                        ${exercise.weight},
+                        '${exercise.notes || ""}'
                     )
                 ">
                     Modifica
@@ -101,7 +102,7 @@ addExerciseBtn.addEventListener("click", async () => {
 
         reps: repsInput.value,
 
-        weight: weightInput.value
+        weight: weightInput.value,
 
         notes: notesInput.value
 
@@ -155,7 +156,8 @@ async function editExercise(
     oldName,
     oldSets,
     oldReps,
-    oldWeight
+    oldWeight,
+    oldNotes
 ) {
 
     const newName =
@@ -169,6 +171,9 @@ async function editExercise(
 
     const newWeight =
         prompt("Peso:", oldWeight);
+
+    const newNotes = 
+        prompt("Note:", oldNotes);
 
     if (
         !newName ||
@@ -202,7 +207,9 @@ async function editExercise(
 
             reps: newReps,
 
-            weight: newWeight
+            weight: newWeight,
+
+            notes: newNotes
         })
     });
 

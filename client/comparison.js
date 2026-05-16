@@ -16,7 +16,7 @@ const exerciseSelectionList =
 const comparisonTableBody =
     document.getElementById("comparisonTableBody");
 
-const sortExercise = document.getElementById("sortExercises");
+const sortExercises = document.getElementById("sortExercises");
 
 const searchExercise = document.getElementById("searchExercise");
 
