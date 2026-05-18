@@ -51,19 +51,19 @@ async function loadExercises() {
 
             <td>
 
-                <button onclick = "
+                <button onclick="
                     editExercise(
                         ${exercise.id},
-                        '${exercise.exercise_name}',
+                        '${exercise.exercise_name.replace(/'/g, "\\'")}',
                         ${exercise.sets},
                         ${exercise.reps},
                         ${exercise.weight},
-                        '${exercise.notes || ""}'
-                    )
-                ">
-                    Modifica
-                </button>
-
+                        '${(exercise.notes || "").replace(/'/g, "\\'")}'
+                )               
+            ">
+                Modifica
+            </button>
+                   
                 <button onclick = "
                     deleteExercise(${exercise.id})
                 ">
@@ -79,7 +79,7 @@ async function loadExercises() {
 // aggiungi esercizio
 addExerciseBtn.addEventListener("click", async () => {
 
-    if( !exerciseName.value || !setsInput.value || !repsInput.value || !weightInput.value){
+    if( !exerciseName.value.trim() || !setsInput.value.trim() || !repsInput.value.trim() || !weightInput.value.trim()){
 
             alert("COMPILA TUTTI I CAMPI");
 
@@ -204,11 +204,11 @@ async function editExercise(
 
             exercise_name: newName,
 
-            sets: newSets,
+            sets: Number(newSets),
 
-            reps: newReps,
+            reps: Number(newReps),
 
-            weight: newWeight,
+            weight: Number(newWeight),
 
             notes: newNotes
         })

@@ -20,19 +20,11 @@ const sortExercises = document.getElementById("sortExercises");
 
 const searchExercise = document.getElementById("searchExercise");
 
-searchExercise.addEventListener(
-    "input",
-    () => {
-
-        openModalBtn.click();
-
-        modal.classList.remove("hidden");
-    }
-);
-
 let selectedExercises = [];
 
 let comparisonChart;
+
+searchExercise.addEventListener("input", loadExercisesModal);
 
 function sortSelectedExercises() {
 
@@ -70,10 +62,7 @@ function goBack() {
     window.location.href = "/";
 }
 
-// APRI MODALE
-openModalBtn.addEventListener("click", async () => {
-
-    modal.classList.remove("hidden");
+async function loadExercisesModal() {
 
     const response =
         await fetch("/all-exercises");
@@ -81,7 +70,8 @@ openModalBtn.addEventListener("click", async () => {
     const exercises =
         await response.json();
 
-    const searchValue = searchExercise.value.toLowerCase();
+    const searchValue =
+        searchExercise.value.toLowerCase();
 
     exerciseSelectionList.innerHTML = "";
 
@@ -89,8 +79,8 @@ openModalBtn.addEventListener("click", async () => {
 
         if (
             !exercise.exercise_name
-            .toLowerCase()
-            .includes(searchValue)
+                .toLowerCase()
+                .includes(searchValue)
         ) {
             return;
         }
@@ -111,9 +101,12 @@ openModalBtn.addEventListener("click", async () => {
 
             div.classList.toggle("selected");
 
-            if (
-                selectedExercises.includes(exercise)
-            ) {
+            const alreadySelected =
+                selectedExercises.some(
+                    e => e.id === exercise.id
+                );
+
+            if (alreadySelected) {
 
                 selectedExercises =
                     selectedExercises.filter(
@@ -131,6 +124,13 @@ openModalBtn.addEventListener("click", async () => {
 
         exerciseSelectionList.appendChild(div);
     });
+}
+
+openModalBtn.addEventListener("click", async () => {
+
+    modal.classList.remove("hidden");
+
+    loadExercisesModal();
 });
 
 // CHIUDI
@@ -141,6 +141,13 @@ closeModalBtn.addEventListener("click", () => {
     selectedExercises = [];
 
     addSelectedBtn.disabled = true;
+
+    document
+    .querySelectorAll(".exercise-option")
+    .forEach(option => {
+
+        option.classList.remove("selected");
+    });
 });
 
 // AGGIUNGI
@@ -179,10 +186,22 @@ addSelectedBtn.addEventListener("click", () => {
 
         comparisonTableBody.appendChild(row);
 
-        labels.push(index + 1);
+        const uniqueLabel =`${exercise.exercise_name} (${new Date(exercise.date).toLocaleDateString("it-IT")})`;
+
+        labels.push(uniqueLabel);
 
         weights.push(exercise.weight);
     });
+
+    if (selectedExercises.length === 0) {
+
+        if (comparisonChart) {
+
+            comparisonChart.destroy();
+        }
+
+        return;
+    }
 
     createChart(labels, weights);
 
@@ -229,11 +248,23 @@ function removeFromComparison(id) {
 
         comparisonTableBody.appendChild(row);
 
-        labels.push(index + 1);
+        const uniqueLabel =`${exercise.exercise_name} (${new Date(exercise.date).toLocaleDateString("it-IT")})`;
+        
+        labels.push(uniqueLabel);
 
         weights.push(exercise.weight);
     });
 
+    if (selectedExercises.length === 0) {
+
+        if (comparisonChart) {
+
+            comparisonChart.destroy();
+        }
+
+        return;
+    }
+    
     createChart(labels, weights);
 }
 

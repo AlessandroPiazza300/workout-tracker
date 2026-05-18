@@ -4,7 +4,10 @@ const db = require("./database/db");
 
 const path = require("path");
 
+
 const app = express();
+
+db.run("PRAGMA foreign_keys = ON"); // server pre la funzione on delete cascade
 
 app.use(cors());
 app.use(express.json());
@@ -37,19 +40,20 @@ db.serialize(() => {
 
             reps INTEGER,
 
-            weight INTEGER,
+            weight REAL,
 
             notes TEXT,
 
             FOREIGN KEY(workout_id)
             REFERENCES workouts(id)
+            ON DELETE CASCADE
         )
     `);
 });
 
 app.get("/workouts", (req, res) => {
 
-    const query = "SELECT * FROM workouts";
+    const query = "SELECT * FROM workouts ORDER BY date DESC";
 
     db.all(query, [], (err,rows) => {
 
@@ -103,14 +107,6 @@ app.post("/workouts", (req, res) => {
 app.delete("/workouts/:id", (req, res) => {
 
     const id = req.params.id;
-
-    db.run(
-        `
-        DELETE FROM exercises
-        WHERE workout_id = ?
-        `,
-        [id]
-    );
     
     const query = `
         DELETE FROM workouts
@@ -192,6 +188,7 @@ app.get("/exercises/:workoutId", (req, res) => {
     const query = `
         SELECT * FROM exercises
         WHERE workout_id = ?
+        ORDER BY id DESC
     `;
 
     db.all(query, [req.params.workoutId], (err, rows) => {
@@ -227,6 +224,17 @@ app.post("/exercises", (req, res) => {
         )
         VALUES (?, ?, ?, ?, ?, ?)
     `;
+    if (!workout_id || !exercise_name || !sets || !reps){
+        return res.status(400).json({
+            error: "CAMPI MANCANTI"
+        });
+    }
+
+    if ( isNaN(Number(sets)) ||isNaN(Number(reps)) ||isNaN(Number(weight)) || Number(sets) <= 0 || Number(reps) <= 0 || Number(weight) < 0) {
+        return res.status(400).json({
+            error: "VALORI NON VALIDI"
+        });
+    }
 
     db.run(
         query,
@@ -258,7 +266,8 @@ app.put("/exercises/:id", (req, res) => {
         exercise_name,
         sets,
         reps,
-        weight
+        weight,
+        notes
     } = req.body;
 
     const query = `
@@ -267,7 +276,8 @@ app.put("/exercises/:id", (req, res) => {
             exercise_name = ?,
             sets = ?,
             reps = ?,
-            weight = ?
+            weight = ?,
+            notes = ?
         WHERE id = ?
     `;
 
@@ -278,6 +288,7 @@ app.put("/exercises/:id", (req, res) => {
             sets,
             reps,
             weight,
+            notes,
             req.params.id
         ],
         function(err) {

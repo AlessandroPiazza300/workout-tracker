@@ -20,6 +20,28 @@ const badgeContainer = document.getElementById("badgeContainer");
 
 let workoutChart; // con let il grafico viene creato distrutto e ricreato ogni volta che deve essere aggiornato
 
+function applyFilters(workouts) {
+
+    const searchValue =
+        searchInput.value.toLowerCase().trim();
+
+    const selectedDate =
+        dateFilter.value;
+
+    return workouts.filter(workout => {
+
+        const matchName =
+            workout.name
+                .toLowerCase()
+                .includes(searchValue);
+
+        const matchDate =
+            !selectedDate ||
+            workout.date.slice(0, 10) === selectedDate;
+
+        return matchName && matchDate;
+    });
+}
 
 // CARICA WORKOUT
 async function loadWorkouts() {
@@ -28,7 +50,14 @@ async function loadWorkouts() {
 
         const response = await fetch("/workouts");
 
-        const workouts = await response.json();
+        if (!response.ok) {
+
+            throw new Error("Errore server");
+        }
+
+        const allWorkouts = await response.json();
+
+        const workouts = applyFilters(allWorkouts);
 
         workoutList.innerHTML = "";
 
@@ -92,28 +121,9 @@ async function loadWorkouts() {
 
         workouts.forEach(workout => {
 
-            const searchValue =
-                searchInput.value.toLowerCase();
+            const uniqueLabel = `${workout.name} (${new Date(workout.date).toLocaleDateString("it-IT")})`;
 
-            const selectedDate =
-                dateFilter.value;
-
-            if (
-                !workout.name
-                .toLowerCase()
-                .includes(searchValue)
-            ) {
-                return;
-            }
-
-            if (
-                selectedDate &&
-                workout.date !== selectedDate
-            ) {
-                return;
-            }
-
-            labels.push(workout.name);
+            labels.push(uniqueLabel);
 
             durations.push(workout.duration);
         });
@@ -183,29 +193,6 @@ async function loadWorkouts() {
 
         workouts.forEach(workout => {
 
-            const searchValue = 
-                searchInput.value.toLowerCase();
-
-            const selectedDate = 
-                dateFilter.value;
-
-            // filtro ricerca
-            if (
-                !workout.name
-                .toLowerCase()
-                .includes(searchValue)
-            ) {
-                return;
-            }
-
-            // filtro data
-            if (
-                selectedDate &&
-                 workout.date !== selectedDate
-            ) {
-                return;
-            }
-
             const workoutCard = document.createElement("div");
 
             workoutCard.classList.add("workout-card");
@@ -224,7 +211,7 @@ async function loadWorkouts() {
 
                 <button onclick="editWorkout(
                     ${workout.id},
-                    '${workout.name}',
+                    '${workout.name.replace(/'/g, "\\'")}',
                     '${workout.date}',
                     ${workout.duration}
                 )">
@@ -245,32 +232,28 @@ async function loadWorkouts() {
     }
 }
 
-searchInput.addEventListener(
-    "input",
-    loadWorkouts
-);
+searchInput.addEventListener("input", () => {
+
+    loadWorkouts();
+});
 
 dateFilter.addEventListener(
     "change",
     loadWorkouts
 );
 
-clearSearchBtn.addEventListener( // svuota ricerca, filtro data ricarica tutti i workout
-    "click",
-    () => {
-        searchInput.value = "";
+clearSearchBtn.addEventListener("click", () => { // svuota ricerca, filtro data e ricarica tutti i workout
 
-        dateFilter.value = "";
+    searchInput.value = "";
+    dateFilter.value = "";
 
-        loadWorkouts();
-    }
-);
-
+    loadWorkouts();
+});
 
 // AGGIUNGI WORKOUT
 addWorkoutBtn.addEventListener("click", async () => {
 
-    if (!nameInput.value || !dateInput.value || !durationInput.value){
+    if (!nameInput.value.trim() || !dateInput.value.trim () || !durationInput.value.trim()){
         alert("COMPILA TUTTI I CAMPI!");
 
         return;
@@ -381,7 +364,7 @@ async function editWorkout(id, oldName, oldDate, oldDuration) {
 
         date: newDate,
 
-        duration: newDuration
+        duration: Number(newDuration)
     };
 
     try {
