@@ -26,7 +26,7 @@ const params =
 const workoutId =
     params.get("id");
 
-// carica esercizi
+// carica esercizi associati al workout selezionato
 async function loadExercises() {
 
     const response = await fetch(
@@ -46,7 +46,7 @@ async function loadExercises() {
             <td>${exercise.sets}</td>
             <td>${exercise.reps}</td>
             <td>${exercise.weight} kg</td>
-            <td>${exercise.sets * exercise.reps * exercise.weight}</td>
+            <td>${exercise.sets * exercise.reps * exercise.weight}</td> 
             <td>${exercise.notes || "-"}</td>
 
             <td>
@@ -76,7 +76,7 @@ async function loadExercises() {
     });
 }
 
-// aggiungi esercizio
+// aggiungi esercizio nel database
 addExerciseBtn.addEventListener("click", async () => {
 
     if( !exerciseName.value.trim() || !setsInput.value.trim() || !repsInput.value.trim() || !weightInput.value.trim()){

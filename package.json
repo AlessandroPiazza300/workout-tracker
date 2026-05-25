@@ -1,15 +1,27 @@
 {
   "name": "workout-tracker",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "Web application per la gestione di workout ed esercizi",
+  "main": "server/app.js",
+
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node server/app.js"
   },
-  "keywords": [],
-  "author": "",
+
+  "keywords": [
+    "workout",
+    "fitness",
+    "nodejs",
+    "express",
+    "sqlite"
+  ],
+
+  "author": "Alessandro Piazza",
+
   "license": "ISC",
+
   "type": "commonjs",
+
   "dependencies": {
     "cors": "^2.8.6",
     "express": "^5.2.1",

@@ -1,20 +1,14 @@
-const modal =
-    document.getElementById("exerciseModal");
+const modal = document.getElementById("exerciseModal");
 
-const openModalBtn =
-    document.getElementById("openModalBtn");
+const openModalBtn = document.getElementById("openModalBtn");
 
-const closeModalBtn =
-    document.getElementById("closeModalBtn");
+const closeModalBtn = document.getElementById("closeModalBtn");
 
-const addSelectedBtn =
-    document.getElementById("addSelectedBtn");
+const addSelectedBtn = document.getElementById("addSelectedBtn");
 
-const exerciseSelectionList =
-    document.getElementById("exerciseSelectionList");
+const exerciseSelectionList = document.getElementById("exerciseSelectionList");
 
-const comparisonTableBody =
-    document.getElementById("comparisonTableBody");
+const comparisonTableBody = document.getElementById("comparisonTableBody");
 
 const sortExercises = document.getElementById("sortExercises");
 
@@ -26,6 +20,7 @@ let comparisonChart;
 
 searchExercise.addEventListener("input", loadExercisesModal);
 
+// ordina gli esercizi selezionati in base al filtro scelto dall'utente
 function sortSelectedExercises() {
 
     const sortValue =
@@ -62,6 +57,7 @@ function goBack() {
     window.location.href = "/";
 }
 
+// carica gli esercizi nella modale di confronto
 async function loadExercisesModal() {
 
     const response =
@@ -208,6 +204,7 @@ addSelectedBtn.addEventListener("click", () => {
     modal.classList.add("hidden");
 });
 
+// rimuove esercizio dalla tabella e aggiorna il grafico
 function removeFromComparison(id) {
 
     selectedExercises =
@@ -268,7 +265,7 @@ function removeFromComparison(id) {
     createChart(labels, weights);
 }
 
-// GRAFICO
+// GRAFICO CONFRONTO creato tramite chart.js
 function createChart(labels, weights) {
 
     if (comparisonChart) {

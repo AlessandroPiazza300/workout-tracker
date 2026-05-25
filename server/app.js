@@ -16,7 +16,7 @@ app.use(express.static(
     path.join(__dirname,"../client") // dice a express usa la cartella client come frontend
 ));
 
-// crea tabella all’avvio
+// creazione automatica tabella SQLite all'avvio del server
 db.serialize(() => {
     db.run(`
         CREATE TABLE IF NOT EXISTS workouts (
@@ -26,7 +26,7 @@ db.serialize(() => {
             duration INTEGER
         )
     `);
-// nuova tabella per esercizi all'interno del workout
+// nuova tabella per esercizi all'interno del workout creata tramite foreign key
     db.run(`
     
         CREATE TABLE IF NOT EXISTS exercises(
@@ -51,6 +51,7 @@ db.serialize(() => {
     `);
 });
 
+// ENDPOINT GET: restituisce tutti i workout salvati
 app.get("/workouts", (req, res) => {
 
     const query = "SELECT * FROM workouts ORDER BY date DESC";
@@ -68,7 +69,7 @@ app.get("/workouts", (req, res) => {
     });
 });
 
-// POST nuovo workout
+// POST: crea un nuovo workout nel database
 app.post("/workouts", (req, res) => {
 
     const { name, date, duration } = req.body;
@@ -137,7 +138,7 @@ app.delete("/workouts/:id", (req, res) => {
     });
 });
 
-// UPDATE workout
+// PUT: modifica un workout esistente
 app.put("/workouts/:id", (req, res) => {
 
     const id = req.params.id;

@@ -20,6 +20,7 @@ const badgeContainer = document.getElementById("badgeContainer");
 
 let workoutChart; // con let il grafico viene creato distrutto e ricreato ogni volta che deve essere aggiornato
 
+// filtra i workout in base al nome cercato e alla data selezionata dall'utente
 function applyFilters(workouts) {
 
     const searchValue =
@@ -30,7 +31,7 @@ function applyFilters(workouts) {
 
     return workouts.filter(workout => {
 
-        const matchName =
+        const matchName = // controlla se il nome del workout contiene il testo cercato
             workout.name
                 .toLowerCase()
                 .includes(searchValue);
@@ -43,11 +44,12 @@ function applyFilters(workouts) {
     });
 }
 
-// CARICA WORKOUT
+// Carica tutti i workout dal database, aggiorna statistiche, grafico e lista HTML
 async function loadWorkouts() {
 
     try {
 
+        // richiesta GET al server tramite FETCH API
         const response = await fetch("/workouts");
 
         if (!response.ok) {
@@ -250,7 +252,7 @@ clearSearchBtn.addEventListener("click", () => { // svuota ricerca, filtro data 
     loadWorkouts();
 });
 
-// AGGIUNGI WORKOUT
+// AGGIUNGI WORKOUT al nuovo database
 addWorkoutBtn.addEventListener("click", async () => {
 
     if (!nameInput.value.trim() || !dateInput.value.trim () || !durationInput.value.trim()){
@@ -277,6 +279,7 @@ addWorkoutBtn.addEventListener("click", async () => {
 
     try {
 
+        // richiesta POST per salvare il workout nel database
         const response = await fetch("/workouts", {
 
             method: "POST",
@@ -341,7 +344,7 @@ async function deleteWorkout(id) {
     }
 }
 
-// MODIFICA WORKOUT
+// MODIFICA WORKOUT esistente tramite richiesta PUT
 async function editWorkout(id, oldName, oldDate, oldDuration) {
 
     const newName = prompt("Nuovo nome workout:", oldName);
@@ -392,7 +395,7 @@ async function editWorkout(id, oldName, oldDate, oldDuration) {
     }
 }
 
-// funzione che riceve
+// reindirizza alla pagina dettaglio del workout
 function openWorkout(id){
     window.location.href = // cambia pagina
         `workout.html?id=${id}`;

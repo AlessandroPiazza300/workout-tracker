@@ -3,7 +3,7 @@
 Web application sviluppata per la gestione e il monitoraggio dei workout e degli esercizi tramite browser.  
 Il progetto permette di creare workout personalizzati, aggiungere tutti gli esercizi svolti durante l'allenamento, confrontare risultati e visualizzare statistiche attraverso grafici dinamici.
 
-Il progetto è stato sviluppato come applicazione Full Stack utilizzando Node.js, Express, SQLite e JavaScript Vanilla.
+Il progetto è stato sviluppato come applicazione Full Stack utilizzando Node.js, Express, SQLite e JavaScript Vanilla. 
 
 -------------------------------------------------------------------------------------
 
