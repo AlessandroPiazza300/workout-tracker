@@ -82,7 +82,7 @@ Serve per salvare dati testuali.
 
 -------------------------------------------------------------------------------------
 
-# Funzionalità della pagina CARDIO
+# 📈 Funzionalità della pagina CARDIO
 Aggiunta esercizio cardio
 L’utente potrà compilare:
 * nome esercizio
@@ -126,3 +126,90 @@ Esempio:
 calorie = 8 × 80 × 0.5 = 320 kcal
 
 -------------------------------------------------------------------------------------
+
+# Tabella HTML
+La pagina mostrerà una tabella contenente:
+| Colonna |
+|---------|
+| Nome esercizio |
+| Minuti |
+| Inclinazione/Resistenza |
+| Calorie |
+| Note |
+| Azioni |
+
+-------------------------------------------------------------------------------------
+
+# 📈 Azioni disponibili
+Per ogni esercizio cardio sarà possibile:
+* modificare dati
+* eliminare esercizio
+tramite pulsanti “Modifica” ed “Elimina”.
+
+-------------------------------------------------------------------------------------
+
+# 🔙 Pulsante ritorno
+La pagina CARDIO conterrà anche un pulsante:
+* TORNA ALLA HOME
+che riporterà l’utente alla schermata principale.
+
+-------------------------------------------------------------------------------------
+
+# 📁 File che verranno creati
+Frontend
+* cardio.html
+* cardio.js
+
+Backend
+* nuove route Express in app.js
+
+Database
+* nuova tabella SQLite cardio_exercises
+
+CSS
+* nuove classi aggiunte in style.css
+
+-------------------------------------------------------------------------------------
+
+# 💻 Tecnologie utilizzate
+La nuova funzionalità utilizzerà:
+* HTML
+* CSS
+* JavaScript
+* Node.js
+* Express.js
+* SQLite
+* Fetch API
+
+-------------------------------------------------------------------------------------
+
+# 🎯 Obiettivo tecnico
+La nuova funzione servirà ad ampliare la web app Workout Tracker aggiungendo il monitoraggio degli allenamenti aerobici con calcolo automatico delle calorie e gestione completa CRUD.
+CRUD significa:
+* Create
+* Read
+* Update
+* Delete
+
+-------------------------------------------------------------------------------------
+
+# 👨🏼‍💻 Pianificazione sviluppo
+FASE 1
+
+* Progettazione README e struttura database.
+
+FASE 2
+
+* Creazione e test query SQL tramite DB Browser for SQLite.
+
+FASE 3
+
+* Sviluppo frontend HTML/CSS/JavaScript.
+
+FASE 4
+
+* Sviluppo backend Express.js e collegamento SQLite.
+
+FASE 5
+
+* Test finale funzionalità cardio.
