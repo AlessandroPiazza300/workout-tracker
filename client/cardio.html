@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Cardio Tracker</title>
+
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+    <nav class="navbar">
+
+        <button
+            class="back-button"
+            onclick="goBack()"
+        >
+            ⬅️ TORNA ALLA HOME
+        </button>
+
+        <h1>
+            ❤️ Cardio Tracker
+        </h1>
+
+    </nav>
+
+    <div class="container">
+
+        <div class="form-container">
+
+            <input
+                type="text"
+                id="exerciseName"
+                placeholder="Nome esercizio"
+            >
+
+            <input
+                type="number"
+                id="minutes"
+                placeholder="Minuti"
+            >
+
+            <input
+                type="number"
+                id="resistance"
+                placeholder="Inclinazione / Resistenza"
+            >
+
+            <input
+                type="text"
+                id="notes"
+                placeholder="Note"
+            >
+
+            <button id="addCardioBtn">
+
+                Aggiungi Attività
+
+            </button>
+
+        </div>
+
+        <table class="exercise-table">
+
+            <thead>
+
+                <tr>
+
+                    <th>
+                        Esercizio
+                    </th>
+
+                    <th>
+                        Minuti
+                    </th>
+
+                    <th>
+                        Inclinazione / Resistenza
+                    </th>
+
+                    <th>
+                        Calorie Bruciate
+                    </th>
+
+                    <th>
+                        Note
+                    </th>
+
+                    <th>
+                        Azioni
+                    </th>
+
+                </tr>
+
+            </thead>
+
+            <tbody id="cardioTableBody">
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+    <script src="cardio.js"></script>
+
+</body>
+
+</html>
