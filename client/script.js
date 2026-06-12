@@ -405,3 +405,8 @@ function openComparisonPage(){
 
     window.location.href = "comparison.html";
 }
+
+function openCardioPage(){
+    
+    window.location.href = "cardio.html";
+}
