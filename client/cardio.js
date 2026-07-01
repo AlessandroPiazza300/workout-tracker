@@ -5,7 +5,7 @@ const addCardioBtn =
     document.getElementById("addCardioBtn");
 
 const cardioName =
-    document.getElementById("cardioName");
+    document.getElementById("exerciseName");
 
 const minutesInput =
     document.getElementById("minutes");
@@ -22,6 +22,33 @@ let cardioExercises = [];
 function goBack() {
 
     window.location.href = "/";
+}
+
+async function loadcardio() {
+
+    try {
+
+        const response = await fetch("/cardio");
+
+
+        if(!response.ok){
+
+            throw new Error("Errore caricamento cardio");
+
+        }
+
+
+        cardioExercises = await response.json();
+
+
+        renderTable();
+
+
+    } catch(error){
+
+        console.error(error);
+
+    }
 }
 
 // CALCOLO CALORIE CON FORMULA MET
@@ -95,7 +122,7 @@ function renderTable() {
             document.createElement("tr");
 
         row.innerHTML = `
-            <td>${exercise.name}</td>
+            <td>${exercise.exercise_name}</td>
 
             <td>${exercise.minutes}</td>
 
@@ -127,7 +154,7 @@ function renderTable() {
 }
 
 // AGGIUNTA ATTIVITÀ CARDIO
-addCardioBtn.addEventListener("click", () => {
+addCardioBtn.addEventListener("click", async() => {
 
     if (
         !cardioName.value.trim() ||
@@ -171,28 +198,36 @@ addCardioBtn.addEventListener("click", () => {
 
     const cardioExercise = {
 
-        id: Date.now(),
+        exercise_name: cardioName.value,
 
-        name: cardioName.value,
+        minutes:Number(minutesInput.value),
 
-        minutes:
-            Number(minutesInput.value),
+        resistance: resistanceInput.value,
 
-        resistance:
-            resistanceInput.value,
+        calories: calories,
 
-        notes:
-            notesInput.value,
+        notes: notesInput.value
 
-        calories:
-            calories
     };
 
-    cardioExercises.push(
-        cardioExercise
-    );
+    const response = await fetch("/cardio", {
+        method:"POST",
 
-    renderTable();
+        headers:{
+            "Content-Type":"application/json"
+        },
+
+        body:JSON.stringify(cardioExercise)
+    });
+    const data = await  response.json();
+    console.log(data);
+    
+    if (!response.ok){
+        alert("errore nel salvataggio del cardio");
+        return;
+    }
+
+    loadcardio();
 
     cardioName.value = "";
     minutesInput.value = "";
@@ -201,28 +236,24 @@ addCardioBtn.addEventListener("click", () => {
 });
 
 // ELIMINA
-function deleteCardio(id) {
+async function deleteCardio(id) {
+    
+    const confirmDelete = confirm("SEI SICURO DI VOLER ELIMINARE?");
 
-    const confirmDelete = confirm(
-        "Sei sicuro di voler eliminare questa attività?"
-    );
-
-    if (!confirmDelete) {
-
+    if(!confirmDelete){
         return;
     }
 
-    cardioExercises =
-        cardioExercises.filter(
-            exercise =>
-                exercise.id !== id
-        );
+    await fetch(`/cardio/${id}`,{
 
-    renderTable();
+        method:"DELETE"
+    });
+
+    loadcardio();
 }
 
 // MODIFICA
-function editCardio(id) {
+async function editCardio(id) {
 
     const exercise =
         cardioExercises.find(
@@ -237,7 +268,7 @@ function editCardio(id) {
     const newName =
         prompt(
             "Nome esercizio:",
-            exercise.name
+            exercise.exercise_name
         );
 
     const newMinutes =
@@ -275,7 +306,7 @@ function editCardio(id) {
         return;
     }
 
-    exercise.name =
+    exercise.exercise_name =
         newName;
 
     exercise.minutes =
@@ -287,5 +318,21 @@ function editCardio(id) {
     exercise.notes =
         newNotes;
 
-    renderTable();
+    await fetch(`/cardio/${id}`,{
+        method:"PUT",
+        headers:{"Content-Type":"application/json"},
+        body: JSON.stringify({
+            exercise_name:newName,
+            minutes:newMinutes,
+            resistance:newResistance,
+            calories:exercise.calories,
+            notes:newNotes
+        })
+    });
+
+    loadcardio();
 }
+
+window.onload= ()=> {
+    loadcardio();
+};

@@ -3,6 +3,7 @@ const cors = require("cors");
 const db = require("./database/db");
 
 const path = require("path");
+const { error } = require("console");
 
 
 const app = express();
@@ -59,7 +60,7 @@ db.serialize(() => {
 
         minutes INTEGER,
 
-        resistence TEXT,
+        resistance TEXT,
 
         calories INTEGER,
 
@@ -337,6 +338,7 @@ app.delete("/exercises/:id", (req, res) => {
     db.run(query, [req.params.id], function(err) {
 
         if (err) {
+        
 
             return res.status(500).json(err);
         }
@@ -349,13 +351,15 @@ app.delete("/exercises/:id", (req, res) => {
 
 app.get("/cardio", (req,res)=>{
 
-    const querry = `
+    const query = `
         SELECT*FROM cardio_exercises
         ORDER BY id DESC
     `;
 
-    db.all(querry,[],(err,rows)=>{
+    db.all(query,[],(err,rows)=>{
         if(err){
+            console.error("errore database cardio:")
+            console.error(err);
             return res.status(500).json(err);
         }
 
@@ -373,6 +377,12 @@ app.post("/cardio",(req,res)=>{
         notes
     } = req.body;
 
+    if(!exercise_name||!minutes){
+        return res.status(400).json({
+            error:"dati mancanti"
+        });
+    }
+
     const query = `
         INSERT INTO cardio_exercises
         (
@@ -392,11 +402,14 @@ app.post("/cardio",(req,res)=>{
             [
                 exercise_name,
                 minutes,
+                resistance,
                 calories,
                 notes
             ],
             function(err){
                 if(err){
+                    console.error("ERRORE INSERT ACRDIO")
+                    console.error(err);
                     return res.status(500).json(err);
                 }
                 res.json({
@@ -405,7 +418,7 @@ app.post("/cardio",(req,res)=>{
             }
         );
 });
-app.put("/cardio",(req,res)=>{
+app.put("/cardio/:id",(req,res)=>{
     const{
         exercise_name,
         minutes,
@@ -415,16 +428,17 @@ app.put("/cardio",(req,res)=>{
     } = req.body;
 
     const query = `
-        INSERT INTO cardio_exercises
-        (
-            exercise_name,
-            minutes,
-            resistance,
-            calories,
-            notes
-        )
-        
-        VALUES(?,?,?,?,?)
+        UPDATE cardio_exercises
+
+        SET
+
+            exercise_name=?,
+            minutes=?,
+            resistance=?,
+            calories=?,
+            notes=?
+        WHERE id=?
+
         `;
 
         db.run(
@@ -433,8 +447,10 @@ app.put("/cardio",(req,res)=>{
             [
                 exercise_name,
                 minutes,
+                resistance,
                 calories,
-                notes
+                notes,
+                req.params.id
             ],
             function(err){
                 if(err){
@@ -447,11 +463,11 @@ app.put("/cardio",(req,res)=>{
         );
 });
 
-app.delete("/cardio",(req,res)=>{
+app.delete("/cardio/:id",(req,res)=>{
 
     const query = `
-        DELETE FROM cardio_exercise
-        WHERE di=?
+        DELETE FROM cardio_exercises
+        WHERE id=?
         
         `;
 
