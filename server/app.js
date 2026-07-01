@@ -49,6 +49,26 @@ db.serialize(() => {
             ON DELETE CASCADE
         )
     `);
+
+    db.run(`
+        CREATE TABLE IF NOT EXISTS cardio_exercises(
+
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+
+        exercise_name TEXT,
+
+        minutes INTEGER,
+
+        resistence TEXT,
+
+        calories INTEGER,
+
+        notes TEXT
+
+        )
+    `);
+
+   
 });
 
 // ENDPOINT GET: restituisce tutti i workout salvati
@@ -326,6 +346,134 @@ app.delete("/exercises/:id", (req, res) => {
         });
     });
 });
+
+app.get("/cardio", (req,res)=>{
+
+    const querry = `
+        SELECT*FROM cardio_exercises
+        ORDER BY id DESC
+    `;
+
+    db.all(querry,[],(err,rows)=>{
+        if(err){
+            return res.status(500).json(err);
+        }
+
+        res.json(rows);
+    });
+
+});
+
+app.post("/cardio",(req,res)=>{
+    const{
+        exercise_name,
+        minutes,
+        resistance,
+        calories,
+        notes
+    } = req.body;
+
+    const query = `
+        INSERT INTO cardio_exercises
+        (
+            exercise_name,
+            minutes,
+            resistance,
+            calories,
+            notes
+        )
+        
+        VALUES(?,?,?,?,?)
+        `;
+
+        db.run(
+            query,
+
+            [
+                exercise_name,
+                minutes,
+                calories,
+                notes
+            ],
+            function(err){
+                if(err){
+                    return res.status(500).json(err);
+                }
+                res.json({
+                    message:"CARDIO AGGIUNTO"
+                });
+            }
+        );
+});
+app.put("/cardio",(req,res)=>{
+    const{
+        exercise_name,
+        minutes,
+        resistance,
+        calories,
+        notes
+    } = req.body;
+
+    const query = `
+        INSERT INTO cardio_exercises
+        (
+            exercise_name,
+            minutes,
+            resistance,
+            calories,
+            notes
+        )
+        
+        VALUES(?,?,?,?,?)
+        `;
+
+        db.run(
+            query,
+
+            [
+                exercise_name,
+                minutes,
+                calories,
+                notes
+            ],
+            function(err){
+                if(err){
+                    return res.status(500).json(err);
+                }
+                res.json({
+                    message:"CARDIO AGIORNATO"
+                });
+            }
+        );
+});
+
+app.delete("/cardio",(req,res)=>{
+
+    const query = `
+        DELETE FROM cardio_exercise
+        WHERE di=?
+        
+        `;
+
+        db.run(
+            query,
+
+            [
+                req.params.id
+            ],
+            function(err){
+                if(err){
+                    return res.status(500).json(err);
+                }
+                res.json({
+                    message:"CARDIO AGGIUNTO"
+                });
+            }
+        );
+});
+
+
+
 
 app.get("/all-exercises", (req, res) => {
 
