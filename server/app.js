@@ -358,8 +358,6 @@ app.get("/cardio", (req,res)=>{
 
     db.all(query,[],(err,rows)=>{
         if(err){
-            console.error("errore database cardio:")
-            console.error(err);
             return res.status(500).json(err);
         }
 
@@ -408,8 +406,6 @@ app.post("/cardio",(req,res)=>{
             ],
             function(err){
                 if(err){
-                    console.error("ERRORE INSERT ACRDIO")
-                    console.error(err);
                     return res.status(500).json(err);
                 }
                 res.json({

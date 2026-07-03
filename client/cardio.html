@@ -37,16 +37,46 @@
 
         <div class="form-container">
 
-            <input
-                type="text"
-                id="exerciseName"
-                placeholder="Nome esercizio"
-            >
+            <select id="exerciseName"> <!--implementazione del menù a tendina per selezionare attività-->
+
+                <option value="">Seleziona attività</option>
+
+                <option>Tapis roulant</option>
+                <option>Cyclette</option>
+                <option>Bicicletta lenta</option>
+                <option>Bicicletta normale</option>
+                <option>Bicicletta veloce</option>
+                <option>Scale</option>
+                <option>Camminata lenta</option>
+                <option>Camminata normale</option>
+                <option>Camminata veloce</option>
+                <option>Mountain bike</option>
+                <option>Corsa lenta</option>
+                <option>Corsa normale</option>
+                <option>Corsa veloce</option>
+                <option>Nuoto</option>
+                <option>Acquagym</option>
+                <option>Salto con la corda</option>
+                <option>Calcio</option>
+                <option>Tennis</option>
+                <option>Basket</option>
+                <option>Pallavolo</option>
+                <option>Pattinaggio</option>
+                <option>Zumba</option>
+                <option>Danza</option>
+
+            </select>
 
             <input
                 type="number"
                 id="minutes"
                 placeholder="Minuti"
+            >
+
+            <input
+                type="number"
+                id="speed"
+                placeholder="Velocità (km/h)"
             >
 
             <input

@@ -10,6 +10,9 @@ const cardioName =
 const minutesInput =
     document.getElementById("minutes");
 
+const speedInput = 
+    document.getElementById("speed");
+
 const resistanceInput =
     document.getElementById("resistance");
 
@@ -231,6 +234,7 @@ addCardioBtn.addEventListener("click", async() => {
 
     cardioName.value = "";
     minutesInput.value = "";
+    speedInput.value = "";
     resistanceInput.value = "";
     notesInput.value = "";
 });
