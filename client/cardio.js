@@ -21,6 +21,41 @@ const notesInput =
 
 let cardioExercises = [];
 
+const metValues = {
+
+    "Camminata lenta": 2.8,
+    "Camminata normale": 3.9,
+    "Camminata veloce": 5.0,
+
+    "Bicicletta lenta": 4.2,
+    "Bicicletta normale": 6.0,
+    "Bicicletta veloce": 8.5,
+
+    "Mountain bike": 11.0,
+
+    "Corsa lenta": 7.0,
+    "Corsa normale": 9.0,
+    "Corsa veloce": 12.0,
+
+    "Scale": 8.8,
+
+    "Nuoto": 7.5,
+    "Acquagym": 4.5,
+
+    "Salto con la corda": 11.5,
+
+    "Calcio": 8.5,
+    "Tennis": 7.0,
+    "Basket": 7.5,
+    "Pallavolo": 4.5,
+
+    "Pattinaggio": 7.0,
+
+    "Zumba": 7.5,
+    "Danza": 6.0
+
+};
+
 // TORNA ALLA HOME
 function goBack() {
 
@@ -61,50 +96,13 @@ function calculateCalories(
     weight
 ) {
 
-    let met = 5;
+    let met = metValues[exercise];
 
-    switch (exercise.toLowerCase()) {
+    if (!met){
 
-        case "camminata":
-            met = 3.8;
-            break;
-
-        case "corsa":
-            met = 8;
-            break;
-
-        case "bicicletta":
-            met = 7.5;
-            break;
-
-        case "cyclette":
-            met = 7;
-            break;
-
-        case "salto con la corda":
-            met = 12;
-            break;
-
-        case "ellittica":
-            met = 5;
-            break;
-
-        case "vogatore":
-            met = 7;
-            break;
-
-        case "stepper":
-            met = 8.5;
-            break;
-
-        case "tapis roulant":
-            met = 6;
-            break;
-
-        default:
-            met = 5;
-            break;
+        met = 5;
     }
+
 
     const calories =
         met *
