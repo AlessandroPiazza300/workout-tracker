@@ -96,13 +96,54 @@ function calculateCalories(
     weight
 ) {
 
-    let met = metValues[exercise];
+    let met;
 
-    if (!met){
+    // 1. TAPIS ROULANT
+    if (exercise === "Tapis roulant") {
 
-        met = 5;
+        const speed = Number(speedInput.value);
+        const incline = Number(resistanceInput.value);
+
+        const roundedSpeed = Math.round(speed);
+
+        let roundedIncline = Math.round(incline / 3) * 3;
+
+        if (roundedIncline < 0) roundedIncline = 0;
+        if (roundedIncline > 15) roundedIncline = 15;
+
+        const metTable = {
+            4:  [3.0, 3.8, 4.8, 6.0, 7.2, 8.5],
+            5:  [3.8, 4.8, 5.8, 7.0, 8.3, 9.8],
+            6:  [4.8, 6.0, 7.2, 8.5, 10.0, 11.5],
+            7:  [6.0, 7.2, 8.5, 10.0, 11.5, 13.0],
+            8:  [8.3, 9.5, 10.8, 12.2, 13.5, 15.0],
+            9:  [9.8, 11.0, 12.5, 14.0, 15.5, 17.0],
+            10: [10.5, 12.0, 13.5, 15.0, 16.5, 18.0],
+            12: [11.8, 13.5, 15.0, 16.8, 18.5, 20.0]
+        };
+
+        met = metTable[roundedSpeed]?.[roundedIncline / 3] || 5;
     }
 
+    // 2. CYCLETTTE 👈 QUI LO INSERISCI
+    else if (exercise === "Cyclette") {
+
+        const resistance = Number(resistanceInput.value);
+
+        if (resistance <= 2) met = 3.2;
+        else if (resistance <= 4) met = 4.0;
+        else if (resistance <= 6) met = 5.2;
+        else if (resistance <= 8) met = 6.8;
+        else if (resistance <= 10) met = 8.5;
+        else met = 10;
+    }
+
+    // 3. ALTRE ATTIVITÀ
+    else {
+        met = metValues[exercise] || 5;
+    }
+
+    // 3. CALCOLO CALORIE
 
     const calories =
         met *
