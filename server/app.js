@@ -60,6 +60,8 @@ db.serialize(() => {
 
         minutes INTEGER,
 
+        speed REAL,
+
         resistance TEXT,
 
         calories INTEGER,
@@ -370,6 +372,7 @@ app.post("/cardio",(req,res)=>{
     const{
         exercise_name,
         minutes,
+        speed,
         resistance,
         calories,
         notes
@@ -386,12 +389,13 @@ app.post("/cardio",(req,res)=>{
         (
             exercise_name,
             minutes,
+            speed,
             resistance,
             calories,
             notes
         )
         
-        VALUES(?,?,?,?,?)
+        VALUES(?,?,?,?,?,?)
         `;
 
         db.run(
@@ -400,6 +404,7 @@ app.post("/cardio",(req,res)=>{
             [
                 exercise_name,
                 minutes,
+                speed,
                 resistance,
                 calories,
                 notes

@@ -205,6 +205,8 @@ addCardioBtn.addEventListener("click", async() => {
 
         minutes:Number(minutesInput.value),
 
+        speed: speedInput.value,
+
         resistance: resistanceInput.value,
 
         calories: calories,
