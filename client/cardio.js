@@ -337,6 +337,48 @@ async function editCardio(id) {
     loadcardio();
 }
 
+function updateFields(){
+    const activity = cardioName.value;
+
+    if (activity ==="Tapis roulant") {
+
+        speedInput.disabled = false;
+        resistanceInput.disabled = false;
+
+        speedInput.placeholder = "Velocità(km/h)";
+        resistanceInput.placeholder = "Inclinazione/Resistenza";
+    
+    } else if(activity === "Cyclette"){
+
+        speedInput.disabled = true;
+        resistanceInput.disabled = false;
+
+        speedInput.value = "";
+
+        speedInput.placeholder = "Non necessario";
+        resistanceInput.placeholder = "Resistenza";
+    }
+    
+    else{
+        speedInput.disabled = true;
+        resistanceInput.disabled = true;
+
+        speedInput.value = "";
+        resistanceInput.value = "";
+
+        speedInput.placeholder = "Non necessario";
+        resistanceInput.placeholder = "Non necessario";
+    }
+
+}
+
+// questo fa si che ogni volta che cambi esercizio la pagina aggiorna automaticamente i campi
+cardioName.addEventListener(
+    "change",
+    updateFields
+);
+
 window.onload= ()=> {
     loadcardio();
+    updateFields(); //appena apro la pagina i campi saranno gia nello stato corretto
 };
