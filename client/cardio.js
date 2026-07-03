@@ -127,7 +127,9 @@ function renderTable() {
 
             <td>${exercise.minutes}</td>
 
-            <td>${exercise.resistance}</td>
+            <td>${exercise.speed || "-"}</td>
+
+            <td>${exercise.resistance || "-"}</td>
 
             <td>${exercise.calories}</td>
 
