@@ -200,45 +200,30 @@ function renderTable() {
 // AGGIUNTA ATTIVITÀ CARDIO
 addCardioBtn.addEventListener("click", async() => {
 
-    if (
-        !cardioName.value.trim() ||
-        !minutesInput.value.trim()
-    ) {
+    if (!cardioName.value.trim() || !minutesInput.value.trim()) {
 
         alert("COMPILA TUTTI I CAMPI!");
 
         return;
     }
 
-    if (
-        Number(minutesInput.value) <= 0
-    ) {
+    if ( Number(minutesInput.value) <= 0) {
 
         alert("I MINUTI DEVONO ESSERE POSITIVI!");
 
         return;
     }
 
-    const weight = prompt(
-        "Inserisci il tuo peso corporeo (kg)"
-    );
+    const weight = prompt("Inserisci il tuo peso corporeo (kg)");
 
-    if (
-        !weight ||
-        Number(weight) <= 0
-    ) {
+    if (!weight || Number(weight) <= 0) {
 
         alert("PESO NON VALIDO!");
 
         return;
     }
 
-    const calories =
-        calculateCalories(
-            cardioName.value,
-            Number(minutesInput.value),
-            Number(weight)
-        );
+    const calories =calculateCalories(cardioName.value, Number(minutesInput.value),Number(weight));
 
     const cardioExercise = {
 
@@ -265,7 +250,9 @@ addCardioBtn.addEventListener("click", async() => {
 
         body:JSON.stringify(cardioExercise)
     });
+
     const data = await  response.json();
+    
     console.log(data);
     
     if (!response.ok){
