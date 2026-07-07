@@ -372,3 +372,16 @@ button {
 
     color: white;
 }
+.exercise-table button{
+
+    display: block;
+
+    width: 100%;
+
+    margin-bottom: 10px;
+}
+
+.exercise-table button:last-child{
+
+    margin-bottom: 0;
+}

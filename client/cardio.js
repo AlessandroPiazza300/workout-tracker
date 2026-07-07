@@ -212,6 +212,36 @@ addCardioBtn.addEventListener("click", async() => {
         alert("I MINUTI DEVONO ESSERE POSITIVI!");
 
         return;
+    
+    }
+
+    if (cardioName.value === "Tapis roulant") {
+
+        if (Number(speedInput.value) < 0) {
+
+            alert("LA VELOCITÀ NON PUÒ ESSERE NEGATIVA!");
+
+            return;
+        }
+
+        if (Number(resistanceInput.value) < 0) {
+
+            alert("L'INCLINAZIONE NON PUÒ ESSERE NEGATIVA!");
+
+            return;
+        }
+
+    }
+
+    if (cardioName.value === "Cyclette") {
+
+        if (Number(resistanceInput.value) < 0) {
+
+            alert("LA RESISTENZA NON PUÒ ESSERE NEGATIVA!");
+
+            return;
+        }
+
     }
 
     const weight = prompt("Inserisci il tuo peso corporeo (kg)");
@@ -299,58 +329,33 @@ async function editCardio(id) {
         return;
     }
 
-    const newName =
-        prompt(
-            "Nome esercizio:",
-            exercise.exercise_name
-        );
+    const newName =prompt("Nome esercizio:",exercise.exercise_name);
 
-    const newMinutes =
-        prompt(
-            "Minuti:",
-            exercise.minutes
-        );
+    const newMinutes = prompt("Minuti:",exercise.minutes);
 
-    const newResistance =
-        prompt(
-            "Inclinazione/Resistenza:",
-            exercise.resistance
-        );
+    const newResistance =prompt("Inclinazione/Resistenza:",exercise.resistance);
 
-    const newNotes =
-        prompt(
-            "Note:",
-            exercise.notes
-        );
+    const newNotes =prompt("Note:",exercise.notes);
 
-    if (
-        !newName ||
-        !newMinutes
-    ) {
+    if (!newName ||!newMinutes) {
 
         return;
     }
 
-    if (
-        Number(newMinutes) <= 0
-    ) {
+    if (Number(newMinutes) <= 0) {
 
         alert("INSERISCI VALORI VALIDI!");
 
         return;
     }
 
-    exercise.exercise_name =
-        newName;
+    exercise.exercise_name = newName;
 
-    exercise.minutes =
-        Number(newMinutes);
+    exercise.minutes = Number(newMinutes);
 
-    exercise.resistance =
-        newResistance;
+    exercise.resistance = newResistance;
 
-    exercise.notes =
-        newNotes;
+    exercise.notes = newNotes;
 
     await fetch(`/cardio/${id}`,{
         method:"PUT",

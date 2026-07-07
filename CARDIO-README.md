@@ -140,8 +140,6 @@ Per tutte le attività aerobiche viene utilizzata una tabella contenente valori 
 Quando l'utente seleziona un'attività dal menu a tendina, il programma recupera automaticamente il relativo valore MET.
 
 
-
-
 ## 🏃🏼 Tapis roulant
 
 Per il tapis roulant il valore MET dipende contemporaneamente da:
