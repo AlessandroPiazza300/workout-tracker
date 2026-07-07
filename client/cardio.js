@@ -202,7 +202,7 @@ addCardioBtn.addEventListener("click", async() => {
 
     if (!cardioName.value.trim() || !minutesInput.value.trim()) {
 
-        alert("COMPILA TUTTI I CAMPI!");
+        alert("COMPILA TUTTI I CAMPI NECESSARI!");
 
         return;
     }
@@ -216,6 +216,12 @@ addCardioBtn.addEventListener("click", async() => {
     }
 
     if (cardioName.value === "Tapis roulant") {
+
+        if(!speedInput.value || !resistanceInput.value){
+            alert("INSERISCI VELOCITA' ED INCLINAZIONE");
+
+            return;
+        }
 
         if (Number(speedInput.value) < 0) {
 
@@ -333,11 +339,42 @@ async function editCardio(id) {
 
     const newMinutes = prompt("Minuti:",exercise.minutes);
 
-    const newResistance =prompt("Inclinazione/Resistenza:",exercise.resistance);
+    let newSpeed = exercise.speed;
+    let newResistance = exercise.resistance;
+
+    // TAPIS ROULANT
+    if (newName === "Tapis roulant") {
+
+        newSpeed = prompt("Velocità (km/h):",exercise.speed);
+
+        newResistance = prompt("Inclinazione:",exercise.resistance);
+
+    }
+
+    // CYCLETTE
+    else if (newName === "Cyclette") {
+
+        newSpeed = "";
+
+        newResistance = prompt("Resistenza:",exercise.resistance);
+
+    }
+
+    // ALTRE ATTIVITÀ
+
+    else {
+
+        newSpeed = "";
+
+        newResistance = "";
+
+    }
 
     const newNotes =prompt("Note:",exercise.notes);
 
     if (!newName ||!newMinutes) {
+
+        alert("CAMPI OBBLIGATORI MANCANTI");
 
         return;
     }
@@ -349,9 +386,17 @@ async function editCardio(id) {
         return;
     }
 
+    if ((newSpeed !== "" && Number(newSpeed) < 0) || (newResistance !== "" && Number(newResistance) < 0)){
+        alert("VELOCITA' E RESISTENZA NON POSSONO ESSERE NEGATIVE:");
+
+        return;
+    }
+
     exercise.exercise_name = newName;
 
     exercise.minutes = Number(newMinutes);
+
+    exercise.speed=newSpeed;
 
     exercise.resistance = newResistance;
 
@@ -362,7 +407,8 @@ async function editCardio(id) {
         headers:{"Content-Type":"application/json"},
         body: JSON.stringify({
             exercise_name:newName,
-            minutes:newMinutes,
+            minutes:Number(newMinutes),
+            speed:newSpeed,
             resistance:newResistance,
             calories:exercise.calories,
             notes:newNotes
