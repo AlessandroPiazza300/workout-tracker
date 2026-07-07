@@ -93,7 +93,9 @@ async function loadcardio() {
 function calculateCalories(
     exercise,
     minutes,
-    weight
+    weight,
+    speed= speedInput.value,
+    resistance = resistanceInput.value
 ) {
 
     let met;
@@ -101,10 +103,10 @@ function calculateCalories(
     // 1. TAPIS ROULANT
     if (exercise === "Tapis roulant") {
 
-        const speed = Number(speedInput.value);
-        const incline = Number(resistanceInput.value);
+        const speedValue = Number(speed);
+        const incline = Number(resistance);
 
-        const roundedSpeed = Math.round(speed);
+        const roundedSpeed = Math.round(speedValue);
 
         let roundedIncline = Math.round(incline / 3) * 3;
 
@@ -128,13 +130,13 @@ function calculateCalories(
     // 2. CYCLETTTE 👈 QUI LO INSERISCI
     else if (exercise === "Cyclette") {
 
-        const resistance = Number(resistanceInput.value);
+        const resistanceValue = Number(resistance);
 
-        if (resistance <= 2) met = 3.2;
-        else if (resistance <= 4) met = 4.0;
-        else if (resistance <= 6) met = 5.2;
-        else if (resistance <= 8) met = 6.8;
-        else if (resistance <= 10) met = 8.5;
+        if (resistanceValue <= 2) met = 3.2;
+        else if (resistanceValue <= 4) met = 4.0;
+        else if (resistanceValue <= 6) met = 5.2;
+        else if (resistanceValue <= 8) met = 6.8;
+        else if (resistanceValue <= 10) met = 8.5;
         else met = 10;
     }
 
@@ -277,6 +279,7 @@ addCardioBtn.addEventListener("click", async() => {
 
     };
 
+
     const response = await fetch("/cardio", {
         method:"POST",
 
@@ -402,6 +405,26 @@ async function editCardio(id) {
 
     exercise.notes = newNotes;
 
+    const weight = prompt("Inserisci il tuo peso corporeo (kg)");
+
+    if (!weight || Number(weight) <= 0) {
+
+        alert("PESO NON VALIDO!");
+
+        return;
+    }
+
+    const newCalories =
+        calculateCalories(
+            newName,
+            Number(newMinutes),
+            Number(weight),
+            newSpeed,
+            newResistance
+        );
+
+
+
     await fetch(`/cardio/${id}`,{
         method:"PUT",
         headers:{"Content-Type":"application/json"},
@@ -410,7 +433,7 @@ async function editCardio(id) {
             minutes:Number(newMinutes),
             speed:newSpeed,
             resistance:newResistance,
-            calories:exercise.calories,
+            calories:newCalories,
             notes:newNotes
         })
     });
